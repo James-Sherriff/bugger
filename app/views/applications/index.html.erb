@@ -4,17 +4,21 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Base URL</th>
+      <th>Developers</th>
+      <th>App Link</th>
+      <th>URL Identifier</th>
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody id="results">
+  <tbody id="applications">
     <% @applications.each do |application| %>
     <tr>
       <td><%= application.name %></td>
       <td><%= application.description %></td>
-      <td><%= application.base_url %></td>
-      <td><%= link_to "", application_path(application.id), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash" %></td>
+      <td><% application.developers.each do |developer| %><span class="label label-primary"><%= User.find(developer).email %></span> <% end %></td>
+      <td><%= link_to application.link, application.link %></td>
+      <td><%= application.url_identifier %></td>
+      <td><%= link_to "", edit_application_path(application.id), class: "btn btn-warning glyphicon glyphicon-pencil" %> <%= link_to "", application_path(application.id), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash" %></td>
     </tr>
     <% end %>
   </tbody>

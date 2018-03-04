@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
+  before_action :authenticate_user!, except: [:create]
   
   def index
     @reports = Report.all
@@ -7,10 +8,10 @@ class ReportsController < ApplicationController
   
   def create
     if params[:key] == Rails.application.config.app_key then
-      application_urls = Application.all.pluck(:base_url)
-      application_urls.each do |application_url|
-        if params[:currentURL] and params[:currentURL].downcase.include? application_url.downcase then
-          @application = Application.find_by(base_url: application_url)
+      application_url_identifiers = Application.all.pluck(:url_identifier)
+      application_url_identifiers.each do |application_url_identifier|
+        if params[:currentURL] and params[:currentURL].downcase.include? application_url_identifier.downcase then
+          @application = Application.find_by(url_identifier: application_url_identifier)
         end
       end
       if @application.nil? then
@@ -23,8 +24,43 @@ class ReportsController < ApplicationController
       render json: {status: "error", message: "Key invalid"}
     end
   end
+      
+  def update
+    @report = Report.find(params[:id])
+    if can? :update, @report then
+      @report.update(report_params)
+      redirect_to report_path(params[:id])
+    else
+      redirect_to reports_path
+    end
+  end
     
   def show
     @report = Report.find(params[:id])
+  end
+      
+  def update_status
+    @report = Report.find(params[:id])
+    if can? :update, @report then
+      @report.update(status: params[:status])
+      redirect_to reports_path, notice: "Status updated."
+    else
+      redirect_to reports_path, alert: "You don't have permission to update the status of that report."
+    end
+  end
+  
+  def archive
+    @report = Report.find(params[:id])
+    if can? :update, @report then
+      @report.update(status: 3)
+      redirect_to reports_path, notice: "Archived report."
+    else
+      redirect_to reports_path, alert: "You don't have permission to archive this report."
+    end
+  end
+      
+  private
+  def report_params
+    params.require(:report).permit(:priority)
   end
 end

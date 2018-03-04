@@ -1,0 +1,56 @@
+<div id="administratorManagement" style="margin-bottom: 5em;">
+  <h2>Administrator Management</h2>
+  <div id="form" style="margin-bottom: 10px">
+    <%= form_tag(admin_update_user_path, method: :post, class: "form-inline") do %>
+      <%= text_field_tag :email, nil, placeholder: "Email Address", class: "form-control" %>
+      <%= hidden_field_tag :role, '1' %>
+      <%= submit_tag("Make Admin", class: "btn btn-primary") %>
+    <% end %>
+  </div>
+  <table class="well table table-striped table-hover table-condensed table-responsive">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="administrators">
+      <% @administrators.each do |administrator| %>
+      <tr>
+        <td><%= administrator.email %></td>
+        <td><%= administrator.name %></td>
+        <td><%#= link_to "", application_path(application.id), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div id="developerManagement">
+  <h2>Developer Management</h2>
+  <div id="form" style="margin-bottom: 10px">
+    <%= form_tag(admin_update_user_path, method: :post, class: "form-inline") do %>
+      <%= text_field_tag :email, nil, placeholder: "Email Address", class: "form-control" %>
+      <%= hidden_field_tag :role, '0' %>
+      <%= submit_tag("Make Developer", class: "btn btn-primary") %>
+    <% end %>
+  </div>
+  <table class="well table table-striped table-hover table-condensed table-responsive">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="developers">
+      <% @developers.each do |developer| %>
+      <tr>
+        <td><%= developer.email %></td>
+        <td><%= developer.name %></td>
+        <td><%#= link_to "", application_path(application.id), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

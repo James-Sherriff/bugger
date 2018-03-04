@@ -3,15 +3,50 @@
   <head>
     <title>Bugger</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= favicon_link_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css' %>
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js' %>
+    
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+    <style>
+      .navbar {
+        background-color: <%= Rails.application.config.banner_color %>
+      }
+      .navbar-default .navbar-brand {
+        color: white;
+        font-weight: bold;
+        
+      }
+      .navbar-default .navbar-nav > li > a {
+        color: white;
+      }
+      .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+        background-color: <%= Rails.application.config.banner_selected_color %>;
+        color: white;
+      }
+      
+      .btn-primary {
+        background-color: <%= Rails.application.config.banner_color %>;
+      }
+      
+      .label-primary {
+        background-color: <%= Rails.application.config.banner_color %>;
+      }
+      
+      .btn-primary:hover, .btn-primary:focus{
+        background-color: <%= Rails.application.config.banner_selected_color %>
+      }
+    </style>
   </head>
 
   <body>
     <%= render 'layouts/nav' %>
-    <% if params[:action] != "index" %>
+    <% if !params[:controller].include? "devise" and params[:action] != "index" %>
     <ol class="breadcrumb">
       <li><%= link_to params[:controller].capitalize, :controller => params[:controller], :action => :index %></li>
       <% if params[:action] == "show" then %>
@@ -19,10 +54,19 @@
       <% end %>
     </ol>
     <% end %>
+    <% flash.each do |name, msg| %>
+      <% if msg.is_a?(String) %>
+        <div style="margin-left: 20px; margin-right: 20px" class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        </div>
+      <% end %>
+    <% end %>
     <div id="container">
       <div class="well">
         <%= yield %>
       </div>
     </div>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

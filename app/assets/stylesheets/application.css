@@ -14,6 +14,24 @@
  *= require_self
  */
 
+.label .label-primary {
+  font-size: 0.9em;
+  margin-bottom: 2px;
+}
+
+#banner {
+  background-color: #3FC380;
+  padding-bottom: 15px;
+}
+
+.navbar-brand {
+  font-size: 1.8em;
+}
+
+.navbar .nav li a {
+  font-size: 1.3em;
+}
+
 #container {
   padding-left: 15px;
   padding-right: 15px;
@@ -21,6 +39,10 @@
 
 hr {
   border-top-color: #bbbbbb;
+}
+
+body {
+  padding-top: 90px;
 }
 
 .report-label {
