@@ -1,0 +1,14 @@
+<%= form_tag(applications_path) do %>
+  <div class="form-group">
+    <%= text_field_tag :name, nil, placeholder: "Name", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= text_field_tag :description, nil, placeholder: "Description", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= text_field_tag :base_url, nil, placeholder: "Base URL", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= submit_tag("Create", class: "btn btn-primary") %>
+  </div>
+<% end %>

@@ -1,0 +1,21 @@
+<h2 style="margin-top: 5px; margin-bottom: 25px">Applications <%= link_to "New Application", new_application_path, class: "btn btn-primary pull-right" %></h2>
+<table class="well table table-striped table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Base URL</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="results">
+    <% @applications.each do |application| %>
+    <tr>
+      <td><%= application.name %></td>
+      <td><%= application.description %></td>
+      <td><%= application.base_url %></td>
+      <td><%= link_to "", application_path(application.id), method: :delete, class: "btn btn-danger glyphicon glyphicon-trash" %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

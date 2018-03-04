@@ -1,0 +1,21 @@
+<h2 style="margin-top: 5px; margin-bottom: 25px">Reports</h2>
+<table class="well table table-striped table-hover table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th>Application</th>
+      <th>Description</th>
+      <th>Timestamp</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="results">
+    <% @reports.each do |report| %>
+    <tr>
+      <td><%= report.application.name %></td>
+      <td><%= report.description %></td>
+      <td><%= report.created_at %></td>
+      <td><%= link_to "", report_path(report), class: "btn btn-primary glyphicon glyphicon-eye-open" %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
