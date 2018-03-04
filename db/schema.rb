@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304001326) do
+ActiveRecord::Schema.define(version: 20180304132004) do
+
+  create_table "add_browser_language_to_reports", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "applications", force: :cascade do |t|
     t.string "name"
@@ -27,6 +32,11 @@ ActiveRecord::Schema.define(version: 20180304001326) do
     t.text "screenshot_base64"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "current_url"
+    t.string "browser_version"
+    t.string "browser_language"
+    t.string "browser_resolution"
+    t.string "device_resolution"
   end
 
 end

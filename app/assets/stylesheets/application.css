@@ -19,6 +19,10 @@
   padding-right: 15px;
 }
 
+hr {
+  border-top-color: #bbbbbb;
+}
+
 .report-label {
   font-weight: bold;
   font-size: 1.3em;

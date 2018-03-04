@@ -6,10 +6,19 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag %>
   </head>
 
   <body>
     <%= render 'layouts/nav' %>
+    <% if params[:action] != "index" %>
+    <ol class="breadcrumb">
+      <li><%= link_to params[:controller].capitalize, :controller => params[:controller], :action => :index %></li>
+      <% if params[:action] == "show" then %>
+      <li class="active"><%= params[:id] %></li>
+      <% end %>
+    </ol>
+    <% end %>
     <div id="container">
       <div class="well">
         <%= yield %>
