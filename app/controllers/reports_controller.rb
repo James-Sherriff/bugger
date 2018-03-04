@@ -3,23 +3,20 @@ class ReportsController < ApplicationController
   
   def index
     @reports = Report.all
-    puts @reports.length
   end
   
   def create
-    puts "KEY - " + params[:key].inspect
-    puts "MY KEY - " + Rails.application.config.app_key.inspect
     if params[:key] == Rails.application.config.app_key then
       application_urls = Application.all.pluck(:base_url)
       application_urls.each do |application_url|
-        if params[:url].include? application_url then
+        if params[:url].downcase.include? application_url.downcase then
           @application = Application.find_by(base_url: application_url)
         end
       end
       if @application.nil? then
         render json: {status: "error", message: "This app is not setup."} and return
       end
-      @report = Report.create(application: @application, screenshot_base64: params[:screenshotBase64], description: params[:description])
+      @report = Report.create(application: @application, screenshot_base64: params[:screenshotBase64], description: params[:description], current_url: params[:current_url], browser_version: params[:browserVersion])
         
       render json: {status: "success", message: "Report submitted."}
     else

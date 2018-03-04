@@ -2,6 +2,7 @@
   <div class="col-xs-4">
     <p class="report-label">Application</p> <p class="report-content"><%= @report.application.name %></p>
     <p class="report-label">Description</p> <p class="report-content"><%= @report.description || "Not Provided" %></p>
+    <p class="report-label">Current URL</p> <p class="report-content"><%= @report.current_url %></p>
     <p class="report-label">Timestamp</p> <p class="report-content"><%= @report.created_at %></p>
   </div>
   <div class="col-xs-8">
