@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
     if params[:key] == Rails.application.config.app_key then
       application_urls = Application.all.pluck(:base_url)
       application_urls.each do |application_url|
-        if params[:url].downcase.include? application_url.downcase then
+        if params[:current_url].downcase.include? application_url.downcase then
           @application = Application.find_by(base_url: application_url)
         end
       end
