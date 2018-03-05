@@ -109,6 +109,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    mysql2 (0.4.10)
     nio4r (2.2.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -129,6 +130,9 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    passenger (5.2.1)
+      rack
+      rake (>= 0.8.1)
     public_suffix (3.0.2)
     puma (3.11.2)
     rack (2.0.4)
@@ -227,7 +231,9 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
+  mysql2
   omniauth-google-oauth2
+  passenger
   puma (~> 3.7)
   rack-cors
   rails (~> 5.1.5)
