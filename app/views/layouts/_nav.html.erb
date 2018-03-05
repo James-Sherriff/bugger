@@ -15,7 +15,7 @@
       <ul class="nav navbar-nav">
         <li <% if params[:controller] == "reports" then %>class="active"<% end %>><a href="<%= reports_path %>">Reports</a></li>
         <li <% if params[:controller] == "applications" then %>class="active"<% end %>><a href="<%= applications_path %>">Applications</a></li>
-        <% if current_user.admin? then %>
+        <% if user_signed_in? and current_user.admin? then %>
         <li <% if params[:controller] == "admin" then %>class="active"<% end %>><a href="<%= admin_index_path %>">Admin</a></li>
         <% end %>
       </ul>
