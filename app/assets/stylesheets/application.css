@@ -14,6 +14,11 @@
  *= require_self
  */
 
+/* Styles the profile picture */
+.profile-picture {
+  border: solid 2px;
+}
+
 .label .label-primary {
   font-size: 0.9em;
   margin-bottom: 2px;

@@ -13,16 +13,18 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <% if user_signed_in? %>
         <li <% if params[:controller] == "reports" then %>class="active"<% end %>><a href="<%= reports_path %>">Reports</a></li>
         <li <% if params[:controller] == "applications" then %>class="active"<% end %>><a href="<%= applications_path %>">Applications</a></li>
-        <% if user_signed_in? and current_user.admin? then %>
+        <% if current_user.admin? then %>
         <li <% if params[:controller] == "admin" then %>class="active"<% end %>><a href="<%= admin_index_path %>">Admin</a></li>
+        <% end %>
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? then %>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %> <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.name %> <% if current_user.profile_picture and current_user.profile_picture != "" then %><img height="30px" width="30px" class="img-circle profile-picture" src="<%= current_user.profile_picture %>"> <% else %><i style="vertical-align: middle;" class="glyphicon glyphicon-user"></i><% end %><i style="border-bottom-color: white; border-top-color: white;margin-left: 10px;" class="caret"></i></a>
             <ul class="dropdown-menu">
               <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
             </ul>

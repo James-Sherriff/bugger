@@ -1,6 +1,11 @@
-<h1>Welcome to Bugger!</h1>
+<h1>Welcome to Bugger! <% if !user_signed_in? then %><%= link_to "Sign In", user_google_oauth2_omniauth_authorize_path, class: "btn btn-primary btn-lg", style: "margin-left: 15px" %><% end %></h1>
 <br>
-<h3>Please install this <a target="_blank" href="https://chrome.google.com/webstore/detail/bugger/ojehpjlolgcjmbbdppjphafikbpopkcl">Chrome extension</a> to submit bug reports.</h3>
+<h3><a target="_blank" href="https://chrome.google.com/webstore/detail/bugger/ojehpjlolgcjmbbdppjphafikbpopkcl">Chrome extension</a></h3>
 <hr>
 <h4>You'll need to configure the extension by right clicking the extension icon and clicking 'Options'</h4>
+<h5>You'll then be prompted to insert the host and key provided by your administrator.</h5>
+<br>
+<h3><a target="_blank" href="https://addons.mozilla.org/en-GB/firefox/addon/bugger-tracker/">Firefox extension</a></h3>
+<hr>
+<h4>You'll need to configure the extension by navigating to 'about:addons' and clicking the Extensions tab. Then click 'Options' to open up the configuration menu.</h4>
 <h5>You'll then be prompted to insert the host and key provided by your administrator.</h5>

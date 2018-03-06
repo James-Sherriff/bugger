@@ -17,7 +17,11 @@ class ReportsController < ApplicationController
       if @application.nil? then
         render json: {status: "error", message: "This app is not setup."} and return
       end
-      @report = Report.create(application: @application, screenshot_base64: params[:screenshotBase64], description: params[:description], current_url: params[:currentURL], browser_version: params[:browserVersion], browser_language: params[:browserLanguage], device_resolution: params[:deviceResolution], browser_resolution: params[:browserResolution])
+      ref_code = SecureRandom.hex(5)
+      while(Report.find_by(ref_code: ref_code) != nil) do
+        ref_code = SecureRandom.hex(5)
+      end
+      @report = Report.create(ref_code: SecureRandom.hex(5), application: @application, screenshot_base64: params[:screenshotBase64], description: params[:description], current_url: params[:currentURL], browser_version: params[:browserVersion], browser_language: params[:browserLanguage], device_resolution: params[:deviceResolution], browser_resolution: params[:browserResolution])
         
       render json: {status: "success", message: "Report submitted."}
     else
@@ -26,7 +30,7 @@ class ReportsController < ApplicationController
   end
       
   def update
-    @report = Report.find(params[:id])
+    @report = Report.find_by(ref_code: params[:id])
     if can? :update, @report then
       @report.update(report_params)
       redirect_to report_path(params[:id])
@@ -36,11 +40,11 @@ class ReportsController < ApplicationController
   end
     
   def show
-    @report = Report.find(params[:id])
+    @report = Report.find_by(ref_code: params[:id])
   end
       
   def update_status
-    @report = Report.find(params[:id])
+    @report = Report.find_by(ref_code: params[:id])
     if can? :update, @report then
       @report.update(status: params[:status])
       redirect_to reports_path, notice: "Status updated."
@@ -50,7 +54,7 @@ class ReportsController < ApplicationController
   end
   
   def archive
-    @report = Report.find(params[:id])
+    @report = Report.find_by(ref_code: params[:id])
     if can? :update, @report then
       @report.update(status: 3)
       redirect_to reports_path, notice: "Archived report."

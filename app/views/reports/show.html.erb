@@ -6,7 +6,7 @@
     <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#updatePriorityModal">Set Priority</button>
     <% end %>
     <p class="report-label">Application</p> <p class="report-content"><%= @report.application.name %></p>
-    <p class="report-label">Current URL</p> <p class="report-content"><%= @report.current_url || "Not Provided" %></p>
+    <p class="report-label" style="overflow-wrap: break-word;">Current URL</p> <p class="report-content"><%= @report.current_url || "Not Provided" %></p>
     <p class="report-label">Browser Version</p> <p class="report-content"><%= @report.browser_version || "Not Provided" %></p>
     <p class="report-label">Browser Language</p> <p class="report-content"><%= @report.browser_language || "Not Provided" %></p>
     <p class="report-label">Browser Resolution</p> <p class="report-content"><%= @report.browser_resolution || "Not Provided" %></p>
