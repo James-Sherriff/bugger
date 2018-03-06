@@ -1,31 +1,52 @@
-<div class="row">
-  <div class="col-xs-4">
-    <% if @report.priority then %>
-    <button class="btn btn-<%= if @report.priority == 0 then "primary" elsif @report.priority == 1 then "warning" elsif @report.priority == 2 then "danger" end %> pull-right" data-toggle="modal" data-target="#updatePriorityModal"><%= if @report.priority == 0 then "Low Priority" elsif @report.priority == 1 then "Medium Priority" elsif @report.priority == 2 then "High Priority" end %></button>
-    <% else %>
-    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#updatePriorityModal">Set Priority</button>
-    <% end %>
-    <p class="report-label">Application</p> <p class="report-content"><%= @report.application.name %></p>
-    <p class="report-label" style="overflow-wrap: break-word;">Current URL</p> <p class="report-content"><%= @report.current_url || "Not Provided" %></p>
-    <p class="report-label">Browser Version</p> <p class="report-content"><%= @report.browser_version || "Not Provided" %></p>
-    <p class="report-label">Browser Language</p> <p class="report-content"><%= @report.browser_language || "Not Provided" %></p>
-    <p class="report-label">Browser Resolution</p> <p class="report-content"><%= @report.browser_resolution || "Not Provided" %></p>
-    <p class="report-label">Device Resolution</p> <p class="report-content"><%= @report.device_resolution || "Not Provided" %></p>
-    <p class="report-label">Timestamp</p> <p class="report-content"><%= @report.created_at %></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-xs-4"><b style="font-size: 1.4em">Status: <span class="label label-<%= if @report.status == 0 then "default" elsif @report.status == 1 then "warning" elsif @report.status == 2 then "success" end %>"><%= friendly_status(@report.status) %></span></b></div>
+      <div class="col-xs-4"><b style="font-size: 1.4em">Priority: <% if @report.priority then %><span class="label label-<%= if @report.priority == 0 then "primary" elsif @report.priority == 1 then "warning" elsif @report.priority == 2 then "danger" end %>"><%= if @report.priority == 0 then "Low Priority" elsif @report.priority == 1 then "Medium Priority" elsif @report.priority == 2 then "High Priority" end %></span><% else %><span class="label label-primary" data-toggle="modal" data-target="#updatePriorityModal">Priority Not Set</span><% end %></b></div>
+      <div class="col-xs-4"><p style="font-size: 1.4em"><b>Submitted At:</b> <%= @report.created_at.strftime("%d/%m/%y - %H:%M") %></p></div>
+    </div>
   </div>
-  <div class="col-xs-8">
-    <img class="thumbnail" src="<%= @report.screenshot_base64 %>" width="100%"/>
+  <div class="panel-body">
+    <%= link_to "Update Report", edit_report_path(@report.ref_code), class: "btn btn-primary", style: "margin-right: 10px" %>
+    <% if @report.priority then %>
+      <button class="btn btn-<%= if @report.priority == 0 then "primary" elsif @report.priority == 1 then "warning" elsif @report.priority == 2 then "danger" end %>" data-toggle="modal" data-target="#updatePriorityModal"><%= if @report.priority == 0 then "Low Priority" elsif @report.priority == 1 then "Medium Priority" elsif @report.priority == 2 then "High Priority" end %></button>
+    <% else %>
+      <button class="btn btn-default" data-toggle="modal" data-target="#updatePriorityModal">Set Priority</button>
+    <% end %>
+    <%= link_to "Archive Report", reports_archive_path(id: @report.ref_code), class: "btn btn-warning", style: "margin-left: 10px", data: {toggle: "tooltip", title: "Archive this report"} %>
   </div>
 </div>
-<hr>
-<div class="row" style="padding-bottom: 50px">
-  <div class="col-xs-12">
-    <p class="report-label">Description</p>
-    <br>
-    <p class="report-content"><%= @report.description || "Not Provided" %></p>
+<div class="well">
+  <div class="row">
+    <div class="col-xs-4">
+      <p class="report-label">Application</p> <p class="report-content"><%= @report.application.name %></p>
+      <p class="report-label" style="overflow-wrap: break-word;">Current URL</p> <p class="report-content"><%= @report.current_url || "Not Provided" %></p>
+      <p class="report-label">Browser Version</p> <p class="report-content"><%= @report.browser_version || "Not Provided" %></p>
+      <p class="report-label">Browser Language</p> <p class="report-content"><%= @report.browser_language || "Not Provided" %></p>
+      <p class="report-label">Browser Resolution</p> <p class="report-content"><%= @report.browser_resolution || "Not Provided" %></p>
+      <p class="report-label">Device Resolution</p> <p class="report-content"><%= @report.device_resolution || "Not Provided" %></p>
+      <p class="report-label">Timestamp</p> <p class="report-content"><%= @report.created_at %></p>
+    </div>
+    <div class="col-xs-8">
+      <img class="thumbnail" src="<%= @report.screenshot_base64 %>" width="100%"/>
+    </div>
+  </div>
+  <hr>
+  <div class="row" style="padding-bottom: 50px">
+    <div class="col-xs-12">
+      <p class="report-label" style="font-size: 1.4em">Description</p>
+      <br>
+      <p class="report-content" style="font-size: 1.3em"><%= @report.description || "Not Provided" %></p>
+    </div>
   </div>
 </div>
 
+<% @report.report_updates.order(created_at: :desc).each do |update| %>
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Updated on <b style="margin-left: 2px"><%= update.created_at.strftime("%d/%m/%y - %H:%M") %></b> by <b><%= update.user.name %></b> - <span class="label label-<%= if update.status == 0 then "default" elsif update.status == 1 then "warning" elsif update.status == 2 then "success" end %>"><%= friendly_status(update.status) %></span></h4></div>
+  <div class="panel-body" style="font-size: 1.5em"><%= update.description %></div>
+</div>
+<% end %>
  
 <div class="modal fade" id="updatePriorityModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -35,8 +56,8 @@
         <h4 class="modal-title">Update report priority</h4>
       </div>
       <div class="modal-body">
-        <%= form_for @report do |f| %>
-        <%= f.select :priority, [["Low", 0], ["Medium", 1], ["High", 2]] %>
+        <%= form_for @report, :url => report_path(@report.ref_code) do |f| %>
+        <%= f.select :priority, [["Low", 0], ["Medium", 1], ["High", 2]], {},{class: "form-control"}%>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

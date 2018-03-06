@@ -49,7 +49,7 @@
     </style>
   </head>
 
-  <body>
+  <body style="padding-bottom: 65px">
     <%= render 'layouts/nav' %>
     <% if !params[:controller].include? "devise" and params[:action] != "index" %>
     <ol class="breadcrumb">
@@ -68,9 +68,7 @@
       <% end %>
     <% end %>
     <div id="container">
-      <div class="well">
-        <%= yield %>
-      </div>
+      <%= yield %>
     </div>
     <%= render 'layouts/footer' %>
   </body>

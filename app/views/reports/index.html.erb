@@ -1,27 +1,29 @@
-<h2 style="margin-top: 5px; margin-bottom: 25px">Reports</h2>
-<table class="well table table-striped table-hover table-condensed table-responsive">
-  <thead>
-    <tr>
-      <th>Application</th>
-      <th>Description</th>
-      <th>Timestamp</th>
-      <th>Status</th>
-      <th>Priority</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody id="reports">
-    <% @reports.each do |report| %>
-    <% if report.status != 3 then %>
-    <tr <% if report.status == 1 then %>class="warning"<% elsif report.status == 2 %>class="success"<% end %>>
-      <td><%= report.application.name %></td>
-      <td><%= report.description %></td>
-      <td><%= report.created_at %></td>
-      <td><span class="label label-<%= if report.status == 0 then "default" elsif report.status == 1 then "warning" elsif report.status == 2 then "success" end %>"><%= friendly_status(report.status) %></span></td>
-      <td><% if report.priority then %><span class="label label-<%= if report.priority == 0 then "primary" elsif report.priority == 1 then "warning" elsif report.priority == 2 then "danger" end %>"><%= if report.priority == 0 then "Low Priority" elsif report.priority == 1 then "Medium Priority" elsif report.priority == 2 then "High Priority" end %></span><% else %><span class="label label-primary" data-toggle="modal" data-target="#updatePriorityModal">Priority Not Set</span><% end %></td>
-      <td><%= link_to "", report_path(report), class: "btn btn-primary glyphicon glyphicon-eye-open" %> <% if can? :update, report and report.status == 1 then  %><%= link_to "", reports_update_status_path(id: report.id, status: 2), class: "btn btn-primary glyphicon glyphicon-ok", data: {toggle: "tooltip", title: "Set report to 'Dealt With'"} %><% elsif can? :update, report and report.status == 0 then %><%= link_to "", reports_update_status_path(report.id, status: 1), class: "btn btn-primary glyphicon glyphicon-refresh", data: {toggle: "tooltip", title: "Set report to 'In Progress'"} %><% end %> <%= link_to "", reports_archive_path(id: report.id), class: "btn btn-warning glyphicon glyphicon-folder-open", data: {toggle: "tooltip", title: "Archive this report"} %></td>
-    </tr>
-    <% end %>
-    <% end %>
-  </tbody>
-</table>
+  <div class="well">
+  <h2 style="margin-top: 5px; margin-bottom: 25px">Reports</h2>
+  <table class="well table table-striped table-hover table-condensed table-responsive">
+    <thead>
+      <tr>
+        <th>Application</th>
+        <th>Description</th>
+        <th>Timestamp</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="reports">
+      <% @reports.each do |report| %>
+      <% if report.status != 3 then %>
+      <tr <% if report.status == 1 then %>class="warning"<% elsif report.status == 2 %>class="success"<% end %>>
+        <td><%= report.application.name %></td>
+        <td><%= report.description %></td>
+        <td><%= report.created_at %></td>
+        <td><span class="label label-<%= if report.status == 0 then "default" elsif report.status == 1 then "warning" elsif report.status == 2 then "success" end %>"><%= friendly_status(report.status) %></span></td>
+        <td><% if report.priority then %><span class="label label-<%= if report.priority == 0 then "primary" elsif report.priority == 1 then "warning" elsif report.priority == 2 then "danger" end %>"><%= if report.priority == 0 then "Low Priority" elsif report.priority == 1 then "Medium Priority" elsif report.priority == 2 then "High Priority" end %></span><% else %><span class="label label-primary" data-toggle="modal" data-target="#updatePriorityModal">Priority Not Set</span><% end %></td>
+        <td><%= link_to "", report_path(report.ref_code), class: "btn btn-primary glyphicon glyphicon-eye-open" %></td>
+      </tr>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

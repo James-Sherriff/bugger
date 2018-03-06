@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create(email: "jamessherriff158@gmail.com", password: Devise.friendly_token(length = 20))
+User.create(email: "jamessherriff158@gmail.com", password: Devise.friendly_token(length = 20), role: 'admin')
 User.create(email: "stuartwright@warwickshire.gov.uk", password: Devise.friendly_token(length = 20))
 User.create(email: "emiliorisi.gov.uk", password: Devise.friendly_token(length = 20))
 User.create(email: "connorbabbington@warwickshire.gov.uk", password: Devise.friendly_token(length = 20))

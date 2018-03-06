@@ -10,12 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306195906) do
-
-  create_table "add_browser_language_to_reports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20180306211249) do
 
   create_table "applications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -26,6 +21,15 @@ ActiveRecord::Schema.define(version: 20180306195906) do
     t.string "developers"
     t.string "url_identifier"
     t.string "link"
+  end
+
+  create_table "report_updates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "report_id"
+    t.string "user_id"
+    t.integer "status"
   end
 
   create_table "reports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -39,7 +43,6 @@ ActiveRecord::Schema.define(version: 20180306195906) do
     t.string "browser_language"
     t.string "browser_resolution"
     t.string "device_resolution"
-    t.integer "priorty"
     t.integer "priority"
     t.integer "status", default: 0
     t.string "ref_code"

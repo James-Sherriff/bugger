@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!, except: [:create]
   
   def index
-    @reports = Report.all
+    @reports = Report.all.order(created_at: :desc)
   end
   
   def create
@@ -28,19 +28,24 @@ class ReportsController < ApplicationController
       render json: {status: "error", message: "Key invalid"}
     end
   end
+    
+  def show
+    @report = Report.find_by(ref_code: params[:id])
+  end
+    
+  def edit
+    @report = Report.find_by(ref_code: params[:id])
+  end
       
   def update
     @report = Report.find_by(ref_code: params[:id])
     if can? :update, @report then
-      @report.update(report_params)
+      @report.update(status: params[:status])
+      ReportUpdate.create(status: params[:status], user: current_user, report: @report, description: params[:description])
       redirect_to report_path(params[:id])
     else
       redirect_to reports_path
     end
-  end
-    
-  def show
-    @report = Report.find_by(ref_code: params[:id])
   end
       
   def update_status

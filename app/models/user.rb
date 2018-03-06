@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :report_updates
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :omniauthable, omniauth_providers: [:google_oauth2]

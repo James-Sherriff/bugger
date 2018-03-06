@@ -1,0 +1,5 @@
+class AddUserIdToReportUpdate < ActiveRecord::Migration[5.1]
+  def change
+    add_column :report_updates, :user_id, :string
+  end
+end
